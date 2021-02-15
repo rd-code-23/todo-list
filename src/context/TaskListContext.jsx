@@ -14,6 +14,9 @@ const TaskListContextProvider = (props) => {
 
     const [editItem, setEditItem] = useState(null);
 
+    const [filterState, setFilterState] = useState('all');
+    const [filterList, setFilterList] = useState([]);
+
     const addTask = (title) => {
         setTasks([...tasks, { title: title, isComplete: false, id: uuid() }])
     }
@@ -48,6 +51,19 @@ const TaskListContextProvider = (props) => {
         )
     }
 
+    const filterListHandler = () => {
+        switch (filterState) {
+            case 'complete':
+                setFilterList(tasks.filter(todo => todo.isComplete));
+                break;
+            case 'incomplete':
+                setFilterList(tasks.filter(todo => !todo.isComplete));
+                break;
+            default:
+                setFilterList(tasks)
+        }
+    }
+
     return (
         <TaskListContext.Provider
             value={{
@@ -58,7 +74,11 @@ const TaskListContextProvider = (props) => {
                 findItem,
                 editItem,
                 editTask,
-                toggleComplete
+                toggleComplete,
+                filterState,
+                setFilterState,
+                filterList,
+                filterListHandler
             }}>
 
             {props.children}

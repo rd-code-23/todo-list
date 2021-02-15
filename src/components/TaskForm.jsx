@@ -3,8 +3,8 @@ import { TaskListContext } from '../context/TaskListContext.jsx';
 
 const TaskForm = () => {
 
-    const { addTask, clearList, editItem, editTask } = useContext(TaskListContext);
-    const [title, setTitle] = useState('') ;
+    const { tasks, addTask, clearList, editItem, editTask, filterState, setFilterState, filterListHandler } = useContext(TaskListContext);
+    const [title, setTitle] = useState('');
 
     const handleChange = e => {
         setTitle(e.target.value);
@@ -30,6 +30,16 @@ const TaskForm = () => {
         }
     }, [editItem]);
 
+    useEffect(() => {
+        filterListHandler();
+        console.log("useffect");
+    }, [filterState, tasks])
+
+    const optHandler = (e) => {
+        console.log(e.target.value);
+        //filterListHandler();
+        setFilterState(e.target.value)
+    }
     return (
         <>
             <form onSubmit={handleSubmit} className="form">
@@ -39,6 +49,13 @@ const TaskForm = () => {
                     <button type="submit" className="btn add-task-btn"> {!editItem ? 'Add Task' : 'Edit Task'}</button>
                     <button className="btn clear-btn" onClick={clearList}>Clear</button>
                 </div>
+
+                <select className="filter" onChange={optHandler}>
+                    <option value="all">All</option>
+                    <option value="complete">Complete</option>
+                    <option value="incomplete">Incomplete</option>
+                </select>
+
             </form>
 
         </>
