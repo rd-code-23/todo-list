@@ -1,3 +1,5 @@
+4th commit titiles "add filter" is the version that does not use mui or useReducer
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
